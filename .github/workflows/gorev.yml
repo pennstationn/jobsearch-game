@@ -1,0 +1,42 @@
+name: gorev-veri-motoru
+
+on:
+  schedule:
+    - cron: "0 3 * * 1-5"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Ilanlari cek
+        run: python fetch_jobs.py
+
+      - name: Degisiklikleri commit et
+        run: |
+          git config user.name "gorev-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add data/jobs.json
+          git diff --cached --quiet || git commit -m "veri: $(date -u +%F) ilan guncellemesi"
+          git push
+
+      - name: Sabah bildirimi (ntfy)
+        if: ${{ vars.NTFY_TOPIC != '' }}
+        run: |
+          COUNT=$(python -c "import json; print(json.load(open('data/jobs.json'))['job_count'])")
+          DAY=$(TZ=Europe/Istanbul date +%u)
+          if [ "$DAY" = "2" ]; then
+            MSG="Sali: en verimli basvuru gunu. $COUNT ilan hazir, 06:00-10:00 penceresi acik. Gorev 1 seni bekliyor."
+          else
+            MSG="Gunaydin. $COUNT ilan tarandi, Gorev 1 hazir."
+          fi
+          curl -s -H "Title: GOREV" -d "$MSG" "https://ntfy.sh/${{ vars.NTFY_TOPIC }}" || true
