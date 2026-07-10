@@ -1,1 +1,22 @@
-{"version":"1.0","fetched_at":null,"job_count":0,"errors":[],"jobs":[]}
+{
+ "version": "1.0",
+ "fetched_at": "2026-07-10T17:07:03.227916+00:00",
+ "job_count": 0,
+ "errors": [
+  "hiring.cafe [Key Account Manager]: HTTPError: HTTP Error 405: Method Not Allowed",
+  "hiring.cafe [Enterprise Account Manager]: HTTPError: HTTP Error 405: Method Not Allowed",
+  "hiring.cafe [Customer Success Manager]: HTTPError: HTTP Error 405: Method Not Allowed",
+  "hiring.cafe [Partner Success Manager]: HTTPError: HTTP Error 405: Method Not Allowed",
+  "hiring.cafe [Insights Manager]: HTTPError: HTTP Error 405: Method Not Allowed",
+  "hiring.cafe [Client Development Manager]: HTTPError: HTTP Error 405: Method Not Allowed",
+  "hiring.cafe [Client Service Manager]: HTTPError: HTTP Error 405: Method Not Allowed",
+  "hiring.cafe [Business Development Manager]: HTTPError: HTTP Error 405: Method Not Allowed",
+  "hiring.cafe [Partnerships Manager]: HTTPError: HTTP Error 405: Method Not Allowed",
+  "hiring.cafe [Market Development Manager]: HTTPError: HTTP Error 405: Method Not Allowed",
+  "hiring.cafe [Commercial Project Manager]: HTTPError: HTTP Error 405: Method Not Allowed",
+  "hiring.cafe [Launch Manager]: HTTPError: HTTP Error 405: Method Not Allowed",
+  "hiring.cafe [Implementation Manager]: HTTPError: HTTP Error 405: Method Not Allowed",
+  "hiring.cafe [Onboarding Manager]: HTTPError: HTTP Error 405: Method Not Allowed"
+ ],
+ "jobs": []
+}
