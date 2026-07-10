@@ -1,8 +1,9 @@
 {
- "version": "1.0",
- "fetched_at": "2026-07-10T17:07:03.227916+00:00",
- "job_count": 0,
+ "version": "1.1",
+ "fetched_at": "2026-07-10T17:29:13.926717+00:00",
+ "job_count": 6,
  "errors": [
+  "jsearch: JSEARCH_KEY tanimli degil, atlandi (kurulum: KURULUM.md)",
   "hiring.cafe [Key Account Manager]: HTTPError: HTTP Error 405: Method Not Allowed",
   "hiring.cafe [Enterprise Account Manager]: HTTPError: HTTP Error 405: Method Not Allowed",
   "hiring.cafe [Customer Success Manager]: HTTPError: HTTP Error 405: Method Not Allowed",
@@ -18,5 +19,131 @@
   "hiring.cafe [Implementation Manager]: HTTPError: HTTP Error 405: Method Not Allowed",
   "hiring.cafe [Onboarding Manager]: HTTPError: HTTP Error 405: Method Not Allowed"
  ],
- "jobs": []
+ "sources": {
+  "jsearch": 0,
+  "hiring_cafe": 0,
+  "remotive": 20,
+  "arbeitnow": 1,
+  "greenhouse": 0,
+  "lever": 0
+ },
+ "jobs": [
+  {
+   "id": "coalitiontechnologiesfreelancecopywriter",
+   "title": "Freelance Copywriter",
+   "company": "Coalition Technologies",
+   "location": "Remote (Worldwide)",
+   "url": "https://remotive.com/remote-jobs/writing/freelance-copywriter-1749306",
+   "posted_at": "2026-07-02T20:01:13",
+   "source": "remotive",
+   "lane": "C",
+   "cv": "CV4_Insights",
+   "fit": 59,
+   "flags": {
+    "red": [],
+    "toxic": [],
+    "green": []
+   }
+  },
+  {
+   "id": "impactclientsclientsuccesscoachcsm",
+   "title": "Client Success Coach (CSM)",
+   "company": "Impact Clients",
+   "location": "Remote (Northern America, Europe, South Africa)",
+   "url": "https://remotive.com/remote-jobs/customer-service/client-success-coach-csm-2091039",
+   "posted_at": "2026-06-29T14:20:56",
+   "source": "remotive",
+   "lane": "E",
+   "cv": "CV5_Commercial_Project",
+   "fit": 59,
+   "flags": {
+    "red": [],
+    "toxic": [
+     "fast-paced"
+    ],
+    "green": [
+     "remote"
+    ]
+   }
+  },
+  {
+   "id": "creditwellnessllcinsidesalescontractor",
+   "title": "Inside Sales Contractor",
+   "company": "Credit Wellness, LLC",
+   "location": "Remote (Worldwide)",
+   "url": "https://remotive.com/remote-jobs/sales/inside-sales-contractor-2086540",
+   "posted_at": "2026-07-08T21:48:18",
+   "source": "remotive",
+   "lane": "C",
+   "cv": "CV4_Insights",
+   "fit": 47,
+   "flags": {
+    "red": [],
+    "toxic": [],
+    "green": [
+     "remote"
+    ]
+   }
+  },
+  {
+   "id": "fsellchighticketfinancialsalesspecialistteamleadtrack",
+   "title": "High-Ticket Financial Sales Specialist & Team Lead Track",
+   "company": "FSE LLC",
+   "location": "Remote (Worldwide)",
+   "url": "https://remotive.com/remote-jobs/sales/high-ticket-financial-sales-specialist-team-lead-track-2090949",
+   "posted_at": "2026-07-08T19:44:58",
+   "source": "remotive",
+   "lane": "B",
+   "cv": "CV2_KAM",
+   "fit": 47,
+   "flags": {
+    "red": [
+     "account executive"
+    ],
+    "toxic": [
+     "fast-paced"
+    ],
+    "green": [
+     "remote"
+    ]
+   }
+  },
+  {
+   "id": "ateamseniorindependentsoftwaredeveloper",
+   "title": "Senior Independent Software Developer",
+   "company": "A.Team",
+   "location": "Remote (Americas, Europe, Israel)",
+   "url": "https://remotive.com/remote-jobs/software-development/senior-independent-software-developer-1919265",
+   "posted_at": "2026-06-16T10:16:04",
+   "source": "remotive",
+   "lane": "E",
+   "cv": "CV5_Commercial_Project",
+   "fit": 47,
+   "flags": {
+    "red": [],
+    "toxic": [],
+    "green": []
+   }
+  },
+  {
+   "id": "vybeorganiccontentmarketingmanagerbeautyd2c",
+   "title": "Organic Content Marketing Manager (Beauty D2C)",
+   "company": "VYBE",
+   "location": "Remote (Cologne)",
+   "url": "https://www.arbeitnow.com/jobs/companies/vybe/organic-content-marketing-manager-beauty-d2c-cologne-404813",
+   "posted_at": "2026-07-10T14:30:35+00:00",
+   "source": "arbeitnow",
+   "lane": "C",
+   "cv": "CV4_Insights",
+   "fit": 47,
+   "flags": {
+    "red": [],
+    "toxic": [],
+    "green": [
+     "hybrid",
+     "remote"
+    ]
+   }
+  }
+ ]
 }
