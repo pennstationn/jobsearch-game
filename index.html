@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GÖREV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============ GÖREV v1.1 (2026-07-10) ============ */
+:root{
+  --night:#131A26; --dusk:#1B2635; --predawn:#26344A;
+  --dawn-sky:#F3E9DC; --amber:#E3A44A; --amber-soft:#EFC98B;
+  --bosphorus:#38677F; --ink:#E9E4DA; --ink-dim:#9BA3B0; --ink-dark:#22262E;
+  --card:#1E293A; --card-line:#2E3B50;
+  --danger:#C05B4D; --success:#6C8F6E; --warn:#B98A3C;
+  --r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'IBM Plex Sans',sans-serif; color:var(--ink);
+  min-height:100vh; transition:background 1.4s ease;
+  background:linear-gradient(180deg,var(--night) 0%,var(--dusk) 100%);
+}
+body.sky-1{background:linear-gradient(180deg,var(--dusk) 0%,var(--predawn) 100%)}
+body.sky-2{background:linear-gradient(180deg,var(--predawn) 0%,#3A4A66 100%)}
+body.sky-3{background:linear-gradient(180deg,#3A4A66 0%,#7A6A5C 60%,#B98A5C 100%)}
+body.sky-4{background:linear-gradient(180deg,#8A7B8F 0%,var(--amber-soft) 55%,var(--dawn-sky) 100%)}
+body.sky-4, body.sky-4 .quiet, body.sky-4 h1{color:var(--ink-dark)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+
+.wrap{max-width:640px;margin:0 auto;padding:28px 18px 90px}
+header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.brand{font-family:'Sora',sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:.24em}
+.brand small{display:block;letter-spacing:.06em;font-weight:400;font-size:.68rem;color:var(--ink-dim);margin-top:2px}
+.streak{font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--amber)}
+.daygoal{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ink-dim);margin-bottom:8px}
+.daygoal b{color:var(--amber)}
+
+.horizon{position:relative;height:26px;margin:12px 0 26px}
+.horizon .line{position:absolute;top:13px;left:0;right:0;height:2px;background:var(--card-line);border-radius:2px}
+.horizon .lit{position:absolute;top:13px;left:0;height:2px;background:linear-gradient(90deg,var(--bosphorus),var(--amber));border-radius:2px;transition:width 1.2s ease}
+.horizon .sun{position:absolute;top:5px;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#FFE9C2,var(--amber));box-shadow:0 0 14px rgba(227,164,74,.55);transition:left 1.2s ease;transform:translateX(-9px)}
+.horizon .marks{position:absolute;top:22px;left:0;right:0;display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:var(--ink-dim)}
+
+h1{font-family:'Sora',sans-serif;font-size:1.5rem;font-weight:600;line-height:1.3;margin-bottom:8px}
+.quiet{color:var(--ink-dim);font-size:.9rem;line-height:1.5}
+.mono{font-family:'IBM Plex Mono',monospace}
+
+.card{background:var(--card);border:1px solid var(--card-line);border-radius:var(--r);padding:20px;margin-top:16px}
+body.sky-3 .card, body.sky-4 .card{background:rgba(255,255,255,.82);border-color:rgba(0,0,0,.08);color:var(--ink-dark)}
+body.sky-3 .card .quiet, body.sky-4 .card .quiet{color:#5A5F6A}
+body.sky-3, body.sky-3 h1{color:var(--ink)}
+
+.btn{display:inline-block;border:none;border-radius:10px;padding:13px 20px;font-family:'Sora',sans-serif;font-weight:600;font-size:.95rem;cursor:pointer;transition:transform .12s ease,opacity .12s}
+.btn:active{transform:scale(.97)}
+.btn:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.btn-primary{background:var(--amber);color:#241A0C;width:100%;margin-top:14px}
+.btn-ghost{background:transparent;color:var(--ink-dim);border:1px solid var(--card-line);font-weight:400;font-size:.85rem;padding:9px 14px}
+body.sky-3 .btn-ghost,body.sky-4 .btn-ghost{color:#5A5F6A;border-color:rgba(0,0,0,.15)}
+.btn-row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.btn-row .btn{flex:1;padding:11px 8px;font-size:.85rem}
+.b-queue{background:var(--bosphorus);color:#fff}
+.b-pass{background:transparent;border:1px solid var(--card-line);color:var(--ink-dim)}
+.b-warm{background:#5C4A70;color:#fff}
+.back{background:transparent;color:var(--ink-dim);border:1px solid var(--card-line);border-radius:8px;font-size:.78rem;padding:7px 12px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;margin-bottom:12px}
+body.sky-3 .back,body.sky-4 .back{color:#5A5F6A;border-color:rgba(0,0,0,.15)}
+
+.badge{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.66rem;padding:3px 8px;border-radius:20px;margin:0 6px 6px 0;letter-spacing:.03em}
+.bg-green{background:rgba(108,143,110,.18);color:#9CC49E;border:1px solid rgba(108,143,110,.4)}
+.bg-red{background:rgba(192,91,77,.16);color:#D98B7F;border:1px solid rgba(192,91,77,.4)}
+.bg-warn{background:rgba(185,138,60,.16);color:var(--amber-soft);border:1px solid rgba(185,138,60,.4)}
+.bg-info{background:rgba(56,103,127,.2);color:#8FBBD1;border:1px solid rgba(56,103,127,.45)}
+
+.job-title{font-family:'Sora',sans-serif;font-weight:600;font-size:1.08rem;margin-bottom:2px}
+.job-meta{font-size:.84rem;color:var(--ink-dim);margin-bottom:10px}
+.fit-bar{height:5px;background:var(--card-line);border-radius:3px;margin:10px 0 4px;overflow:hidden}
+.fit-bar div{height:100%;background:linear-gradient(90deg,var(--bosphorus),var(--amber));border-radius:3px}
+.fit-label{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--ink-dim)}
+
+.checklist label{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--card-line);cursor:pointer;font-size:.93rem;line-height:1.45}
+.checklist label:last-of-type{border-bottom:none}
+.checklist input{width:19px;height:19px;accent-color:var(--amber);flex-shrink:0;margin-top:1px}
+
+input[type=text],input[type=url],textarea,select{
+  width:100%;background:#141C2A;border:1px solid var(--card-line);color:var(--ink);
+  border-radius:9px;padding:10px 12px;font-family:'IBM Plex Sans',sans-serif;font-size:.9rem;margin-top:8px}
+body.sky-3 input,body.sky-3 textarea,body.sky-3 select,
+body.sky-4 input,body.sky-4 textarea,body.sky-4 select{background:#fff;color:var(--ink-dark);border-color:rgba(0,0,0,.15)}
+textarea{min-height:80px;resize:vertical}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--amber)}
+input[type=number]{width:80px;background:#141C2A;border:1px solid var(--card-line);color:var(--ink);border-radius:9px;padding:8px 10px;margin-top:6px}
+body.sky-3 input[type=number],body.sky-4 input[type=number]{background:#fff;color:var(--ink-dark)}
+
+.scratch{position:relative;height:150px;border-radius:var(--r);overflow:hidden;margin-top:16px;cursor:pointer;user-select:none}
+.scratch .under{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#F7EEDB,#EFC98B);color:#3A2C12;text-align:center;padding:14px}
+.scratch .under .prize{font-family:'Sora',sans-serif;font-weight:700;font-size:1.25rem}
+.scratch .cover{position:absolute;inset:0;background:repeating-linear-gradient(45deg,#2A3448,#2A3448 12px,#232C3E 12px,#232C3E 24px);display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;letter-spacing:.15em;font-size:.85rem;color:var(--ink-dim);transition:opacity .5s,transform .5s}
+.scratch.open .cover{opacity:0;transform:scale(1.06);pointer-events:none}
+
+nav{position:fixed;bottom:0;left:0;right:0;background:rgba(15,20,30,.92);backdrop-filter:blur(8px);border-top:1px solid var(--card-line);display:flex;justify-content:center;gap:0;padding:6px 2px;z-index:50;overflow-x:auto}
+nav button{background:none;border:none;color:var(--ink-dim);font-family:'IBM Plex Sans',sans-serif;font-size:.7rem;padding:8px 8px;cursor:pointer;border-radius:8px;white-space:nowrap}
+nav button.on{color:var(--amber);background:rgba(227,164,74,.1)}
+nav button:focus-visible{outline:2px solid var(--amber)}
+
+.list-item{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--card-line)}
+.list-item:last-child{border-bottom:none}
+.list-item .t{font-weight:500;font-size:.92rem}
+.list-item .s{font-size:.78rem;color:var(--ink-dim)}
+.mini{font-size:.74rem;padding:6px 10px;border-radius:7px;border:1px solid var(--card-line);background:transparent;color:var(--ink-dim);cursor:pointer;font-family:'IBM Plex Sans',sans-serif}
+.mini.hot{border-color:var(--amber);color:var(--amber)}
+.mini.bad{border-color:var(--danger);color:#D98B7F}
+.hidden{display:none!important}
+.center{text-align:center}
+.kpi{display:flex;gap:6px;margin-top:10px}
+.kpi span{flex:1;height:8px;border-radius:4px;background:var(--card-line)}
+.kpi span.full{background:var(--success)}
+.banner{border:1px solid var(--warn);background:rgba(185,138,60,.1);border-radius:10px;padding:12px 14px;font-size:.85rem;margin-top:14px;color:var(--amber-soft)}
+.section-title{font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:600;margin:26px 0 4px}
+.todo-item{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--card-line)}
+.todo-item:last-child{border-bottom:none}
+.todo-item input[type=checkbox]{width:19px;height:19px;accent-color:var(--success);flex-shrink:0}
+.todo-item .txt{flex:1;font-size:.92rem}
+.todo-item .txt.done{text-decoration:line-through;color:var(--ink-dim)}
+footer{margin-top:40px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.64rem;color:var(--ink-dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">GÖREV<small>ready, steady, go!</small></div>
+    <div class="streak mono" id="streakBox">seri 0</div>
+  </header>
+  <div class="daygoal" id="dayGoal"></div>
+
+  <div class="horizon" aria-hidden="true">
+    <div class="line"></div>
+    <div class="lit" id="hLit" style="width:0%"></div>
+    <div class="sun" id="hSun" style="left:0%"></div>
+    <div class="marks"><span>eleme</span><span>başvuru</span><span>mesaj</span><span>tarama</span></div>
+  </div>
+
+  <main id="app" aria-live="polite"></main>
+
+  <footer>GÖREV v1.1 · 2026-07-10 · veri: <span id="dataAge">-</span></footer>
+</div>
+
+<nav aria-label="Bölümler">
+  <button data-tab="focus" class="on">Bugün</button>
+  <button data-tab="queue">Kuyruk</button>
+  <button data-tab="tracker">Takip</button>
+  <button data-tab="notes">Notlar</button>
+  <button data-tab="cv">CV'ler</button>
+  <button data-tab="blacklist">Karaliste</button>
+  <button data-tab="settings">Ayarlar</button>
+</nav>
+
+<script>
+/* ================= GÖREV v1.1 ================= */
+"use strict";
+
+/* ---------- sabitler ---------- */
+const LANES = {
+  A:{name:"BD & Partnerships", cv:"CV1_BD", note:"Referanslı başvuru öncelikli", color:"#5C7FB8"},
+  B:{name:"KAM / Commercial",  cv:"CV2_KAM", note:"Birincil şerit", color:"#6C8F6E"},
+  C:{name:"Insights / Client Service", cv:"CV4_Insights", note:"İkincil aktif şerit", color:"#B98A3C"},
+  D:{name:"Kurumsal (UN/EBRD)",cv:"CV3_Master", note:"Yavaş süreç, yüksek uyum", color:"#8A6FA8"},
+  E:{name:"Commercial Projects",cv:"CV5_Commercial_Project", note:"Fırsatçı şerit", color:"#38677F"}
+};
+/* CV uyum bilgisi: doğrulanmış coverage tahminleri */
+const CV_FIT = {
+  CV1_BD:[["BD&P Manager","%88"],["Merchant Partnerships","%90"],["Strategic Partnerships","%85"],["Channel Partnerships","%80"]],
+  CV2_KAM:[["KAM / Enterprise AM","%65-70"],["CSM (SaaS)","%60-65"],["Partner Success","%65"]],
+  CV3_Master:[["Kurumsal / network paylaşımı","genel"],["UN/EBRD tipi roller","yüksek uyum, düşük hacim"]],
+  CV4_Insights:[["Client Service / Development","%70"],["Insights Manager","%65"]],
+  CV5_Commercial_Project:[["Commercial Project Manager","%70"],["Launch / Implementation","%65"],["Partner Program Manager","%65"]]
+};
+/* LinkedIn şerit rotasyonu (sadece tarama görevi için) */
+const LANE_OF_DAY = {1:"C",2:"B",3:"E",4:"B",5:"C",6:"B",7:"B"};
+const LI_BASE = "https://www.linkedin.com/jobs/search/?f_TPR=r86400&location=Istanbul%2C%20Turkey&keywords=";
+const LI_QUERIES = {
+  A:'"Business Development Manager" OR "Partnerships Manager"',
+  B:'"Key Account Manager" OR "Customer Success Manager" OR "Enterprise Account Manager"',
+  C:'"Insights Manager" OR "Client Service" OR "Client Development"',
+  E:'"Launch Manager" OR "Implementation Manager" OR "Commercial Project"'
+};
+const DEFAULT_REWARDS = [
+  "Dondurma. Bugün hak edildi.",
+  "Jelibon paketi açılıyor.",
+  "1 saat tamamen serbest, suçluluk yok.",
+  "Kahveni dışarıda iç, telefonsuz.",
+  "Boş çıktı. Yarın şansına.",
+  "Boş çıktı. Seri yine de senin.",
+  "BÜYÜK ÖDÜL: bu akşam kendine güzel bir yemek."
+];
+
+/* ---------- durum ---------- */
+const KEY = "gorev_state_v1";
+let S = load();
+function load(){
+  let s = null;
+  try{ s = JSON.parse(localStorage.getItem(KEY)); }catch(e){}
+  const base = {
+    streak:0, lastClosed:null, freezeWeek:null,
+    day:{date:null, step:0, apps:0, msgs:0},
+    decided:{}, queue:[], warm:[],
+    tracker:[], warmLog:[], todos:[],
+    pendingBlack:[], black:["Trendyol","Insider"],
+    rewards:DEFAULT_REWARDS.slice(), rewardLog:[],
+    goals:{apps:2, msgs:1}
+  };
+  if(!s) return base;
+  /* v1.0 -> v1.1 geçişi: eksik alanları tamamla */
+  for(const k in base){ if(s[k]===undefined) s[k]=base[k]; }
+  if(s.day.apps===undefined) s.day.apps=0;
+  if(s.day.msgs===undefined) s.day.msgs=0;
+  return s;
+}
+function save(){ localStorage.setItem(KEY, JSON.stringify(S)); }
+
+/* ---------- tarih (TR saati) ---------- */
+function trDate(){ return new Date().toLocaleDateString("en-CA",{timeZone:"Europe/Istanbul"}); }
+function trDow(){
+  const w=new Date().toLocaleDateString("en-US",{timeZone:"Europe/Istanbul",weekday:"short"});
+  return {Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6,Sun:7}[w];
+}
+function trDayName(dateStr){
+  const d = dateStr ? new Date(dateStr+"T12:00:00Z") : null;
+  const names=["Paz","Pzt","Sal","Çar","Per","Cum","Cmt"];
+  return d ? names[d.getUTCDay()] : "";
+}
+function weekId(){
+  const d=new Date(trDate()+"T12:00:00Z"); const j=new Date(Date.UTC(d.getUTCFullYear(),0,1));
+  return d.getUTCFullYear()+"-"+Math.ceil((((d-j)/864e5)+j.getUTCDay()+1)/7);
+}
+function daysAgo(iso){ if(!iso) return null; const t=Date.parse(iso); if(isNaN(t)) return null; return Math.floor((Date.now()-t)/864e5); }
+
+/* ---------- veri ---------- */
+let DATA = {jobs:[], fetched_at:null, errors:[], sources:{}};
+async function loadJobs(){
+  try{
+    const r = await fetch("data/jobs.json?t="+Date.now());
+    DATA = await r.json();
+    if(!DATA.sources) DATA.sources={};
+  }catch(e){ DATA = {jobs:[],fetched_at:null,errors:["jobs.json okunamadı"],sources:{}}; }
+  const age = daysAgo(DATA.fetched_at);
+  document.getElementById("dataAge").textContent =
+    DATA.fetched_at ? (age===0?"bugün":age+" gün önce") : "yok";
+}
+function triageList(){
+  const bl = S.black.map(b=>b.toLowerCase());
+  return (DATA.jobs||[])
+    .filter(j=>!S.decided[j.id])
+    .filter(j=>!bl.some(b=>(j.company||"").toLowerCase().includes(b)))
+    .slice(0,10);
+}
+function isFresh(j){ const a=daysAgo(j.posted_at); return a!==null && a<=2; }
+function isBarbell(j){ const a=daysAgo(j.posted_at); return a!==null && a>=30; }
+
+/* ---------- gün yönetimi ---------- */
+function ensureDay(){
+  const today = trDate();
+  if(S.day.date !== today){ S.day = {date:today, step:0, apps:0, msgs:0}; save(); }
+}
+function weekWarmCount(){
+  const wk = weekId();
+  return S.warmLog.filter(w=>w.week===wk).length;
+}
+function goalsMet(){ return S.day.apps>=S.goals.apps && S.day.msgs>=S.goals.msgs; }
+
+/* ---------- görsel ---------- */
+function paintSky(){
+  const stage = Math.min(4, Math.round(S.day.step/5*4));
+  document.body.className = S.day.step>0 ? "sky-"+stage : "";
+  const pct = Math.min(S.day.step,5)/5*100;
+  document.getElementById("hLit").style.width = pct+"%";
+  document.getElementById("hSun").style.left = pct+"%";
+  document.getElementById("streakBox").textContent = "seri "+S.streak+(S.streak>=3?" ●":"");
+  document.getElementById("dayGoal").innerHTML =
+    `bugünün hedefi: <b>${S.day.apps}/${S.goals.apps}</b> başvuru · <b>${S.day.msgs}/${S.goals.msgs}</b> mesaj · hafta: ${weekWarmCount()}/5 sıcak temas`;
+}
+
+/* ---------- yardımcı html ---------- */
+const app = document.getElementById("app");
+function esc(s){ return (s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function backBtn(){ return `<button class="back" onclick="goBack()">← Geri</button>`; }
+function goBack(){ if(S.day.step>0){ S.day.step--; save(); render(); } }
+function badges(j){
+  let h="";
+  if(isFresh(j)) h+='<span class="badge bg-green">taze 24-48s</span>';
+  if(isBarbell(j)) h+='<span class="badge bg-info">barbell 30g+</span>';
+  (j.flags?.green||[]).slice(0,3).forEach(f=>h+='<span class="badge bg-green">'+esc(f)+'</span>');
+  (j.flags?.toxic||[]).forEach(f=>h+='<span class="badge bg-warn">toksik: '+esc(f)+'</span>');
+  (j.flags?.red||[]).forEach(f=>h+='<span class="badge bg-red">kırmızı çizgi: '+esc(f)+'</span>');
+  return h;
+}
+function jobCard(j, buttons){
+  return `<div class="card">
+    <div>${badges(j)}</div>
+    <div class="job-title">${esc(j.title)}</div>
+    <div class="job-meta">${esc(j.company)} · ${esc(j.location)} · <span class="mono">${esc(j.source||"")}</span></div>
+    <div class="fit-bar"><div style="width:${j.fit||0}%"></div></div>
+    <div class="fit-label">Şerit ${j.lane} · ${LANES[j.lane]?.cv||""} · uyum ~%${j.fit||0}</div>
+    ${j.url?`<a href="${esc(j.url)}" target="_blank" rel="noopener" class="quiet" style="font-size:.8rem">ilanı aç ↗</a>`:""}
+    ${buttons||""}
+  </div>`;
+}
+
+/* ================= EKRANLAR ================= */
+let TAB = "focus";
+
+function render(){
+  ensureDay(); paintSky();
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.tab===TAB));
+  if(TAB==="focus") renderFocus();
+  else if(TAB==="queue") renderQueue();
+  else if(TAB==="tracker") renderTracker();
+  else if(TAB==="notes") renderNotes();
+  else if(TAB==="cv") renderCV();
+  else if(TAB==="blacklist") renderBlack();
+  else renderSettings();
+}
+
+/* ---------- FOCUS MODE: 5 adım ---------- */
+/* 0=başla, 1=eleme, 2=başvuru, 3=mesaj, 4=linkedin, 5=kapanış */
+function renderFocus(){
+  const dow = trDow();
+  if(dow>=6){
+    app.innerHTML = `<h1>Bugün kapalı.</h1>
+      <p class="quiet">Hafta sonu serini bozmaz. Dinlen, fotoğraf çek.
+      İlla bir şey yapmak istersen kuyruk orada ama zorunlu değil.</p>`;
+    return;
+  }
+  if(S.day.step>=5){ renderClosed(); return; }
+
+  const stale = daysAgo(DATA.fetched_at);
+  const staleBanner = (stale===null||stale>2)
+    ? `<div class="banner">Veri güncel değil. Eleme link moduna geçer: LinkedIn taramasından elle ekle.</div>` : "";
+
+  if(S.day.step===0){
+    const tue = dow===2 ? " Bugün Salı: haftanın en verimli başvuru günü, 06:00-10:00 penceresi." : "";
+    app.innerHTML = `<h1>Günün hedefi: ${S.goals.apps} başvuru + ${S.goals.msgs} mesaj.</h1>
+      <p class="quiet">5 adım. Sıra sende değil, sistemde.${tue}</p>
+      ${staleBanner}
+      <button class="btn btn-primary" onclick="stepTo(1)">Güne başla</button>`;
+    return;
+  }
+  if(S.day.step===1){ renderTriage(staleBanner); return; }
+  if(S.day.step===2){ renderApply(); return; }
+  if(S.day.step===3){ renderMessage(); return; }
+  if(S.day.step===4){ renderLinkedin(); return; }
+}
+function stepTo(n){ S.day.step=n; save(); render(); }
+
+/* Adım 1: eleme */
+function renderTriage(staleBanner){
+  const list = triageList();
+  if(list.length===0){
+    app.innerHTML = `${backBtn()}<h1>Adım 1/5 · Eleme</h1>
+      ${staleBanner||""}
+      <div class="card center"><p class="quiet">Elenecek yeni ilan yok. Temiz masa.</p>
+      <button class="btn btn-primary" onclick="stepTo(2)">Başvuruya geç</button></div>`;
+    return;
+  }
+  const j = list[0];
+  const passHint = (j.flags?.red||[]).length ? `<p class="quiet" style="margin-top:8px;font-size:.8rem;color:#D98B7F">Sistem önerisi: PAS (kırmızı çizgi)</p>` : "";
+  const toxicBtn = (j.flags?.toxic||[]).length ? `<button class="mini bad" style="margin-top:10px" onclick="suggestBlack('${esc(j.company)}')">Şirketi karalisteye öner</button>` : "";
+  app.innerHTML = `${backBtn()}<h1>Adım 1/5 · Eleme</h1>
+    <p class="quiet">Kalan: ${list.length}. Kart başına 60 saniye, düşünme, sınıfla.</p>
+    ${jobCard(j, `${passHint}
+      <div class="btn-row">
+        <button class="btn b-queue" onclick="decide('${j.id}','queue')">Kuyruğa</button>
+        <button class="btn b-warm" onclick="decide('${j.id}','warm')">Warm-önce</button>
+        <button class="btn b-pass" onclick="decide('${j.id}','pass')">Pas</button>
+      </div>${toxicBtn}`)}
+    <button class="btn btn-ghost" style="margin-top:12px" onclick="stepTo(2)">Bugünlük eleme yeter, devam</button>`;
+}
+function decide(id, what){
+  S.decided[id]=what;
+  const j=(DATA.jobs||[]).find(x=>x.id===id);
+  if(j){ if(what==="queue") S.queue.push(j); if(what==="warm") S.warm.push(j); }
+  save();
+  if(triageList().length===0) S.day.step=2, save();
+  render();
+}
+
+/* Adım 2: başvurular (hedefe kadar döngü) */
+function renderApply(){
+  const done = S.day.apps, goal = S.goals.apps;
+  if(S.queue.length===0){
+    app.innerHTML = `${backBtn()}<h1>Adım 2/5 · Başvuru (${done}/${goal})</h1>
+      <div class="card center">
+        <p class="quiet">Kuyruk boş. LinkedIn taramasından ilan ekle veya elle gir.</p>
+        <input type="text" id="mTitle" placeholder="Pozisyon adı">
+        <input type="text" id="mCompany" placeholder="Şirket">
+        <input type="url" id="mUrl" placeholder="İlan linki">
+        <button class="btn btn-primary" onclick="manualAdd(true)">Kuyruğa ekle</button>
+      </div>
+      <button class="btn btn-ghost" style="margin-top:12px" onclick="stepTo(3)">Mesaj adımına geç</button>`;
+    return;
+  }
+  const j = S.queue.slice().sort((a,b)=>(b.fit||0)-(a.fit||0))[0];
+  app.innerHTML = `${backBtn()}<h1>Adım 2/5 · Başvuru (${done}/${goal})</h1>
+    <p class="quiet">Kuyruğun en yüksek uyumlusu. Karar yok, uygulama var.</p>
+    ${jobCard(j)}
+    <div class="card checklist">
+      <label><input type="checkbox" id="c1"> JD'yi Claude'a at, ${LANES[j.lane]?.cv||"ilgili CV"} ile tailor et (10 dk kuralı)</label>
+      <label><input type="checkbox" id="c2"> Başvuruyu şirket kariyer sayfasından gönder (Easy Apply son çare)</label>
+      <button class="btn btn-primary" onclick="applyDone('${j.id}')">Başvurdum, takibe ekle</button>
+    </div>
+    <div class="btn-row">
+      <button class="btn b-pass" onclick="skipJob('${j.id}')">Bunu atla, sıradaki</button>
+      <button class="btn b-pass" onclick="stepTo(3)">Bugünlük yeter, mesaja geç</button>
+    </div>`;
+}
+function applyDone(id){
+  if(!document.getElementById("c1").checked || !document.getElementById("c2").checked){
+    alert("İki adım da işaretlenmeden başvuru sayılmaz. Tailoring atlanmaz."); return;
+  }
+  const i = S.queue.findIndex(x=>x.id===id);
+  if(i>-1){
+    const j=S.queue.splice(i,1)[0];
+    S.tracker.unshift({id:j.id,title:j.title,company:j.company,cv:j.cv,stage:"Başvuruldu",date:trDate(),url:j.url});
+  }
+  S.day.apps++;
+  save();
+  if(S.day.apps>=S.goals.apps && S.queue.length===0){ S.day.step=3; save(); }
+  render();
+}
+function skipJob(id){
+  const i=S.queue.findIndex(x=>x.id===id);
+  if(i>-1){ const j=S.queue.splice(i,1)[0]; S.queue.push(j); }
+  save(); render();
+}
+
+/* Adım 3: mesaj (warm veya cold) */
+function renderMessage(){
+  const done=S.day.msgs, goal=S.goals.msgs;
+  const warmPick = S.warm[0];
+  app.innerHTML = `${backBtn()}<h1>Adım 3/5 · Mesaj (${done}/${goal})</h1>
+    <p class="quiet">Warm contact veya cold outreach. Haftalık KPI: 5 sıcak temas (referanslı başvuru şansı 18 kat).</p>
+    <div class="kpi">${[0,1,2,3,4].map(i=>`<span class="${i<weekWarmCount()?"full":""}"></span>`).join("")}</div>
+    ${warmPick?`<div class="card"><p class="quiet" style="font-size:.8rem">Warm-önce kuyruğundan öneri:</p>
+      <div class="job-title">${esc(warmPick.title)}</div>
+      <div class="job-meta">${esc(warmPick.company)}</div>
+      <p class="quiet" style="font-size:.85rem">Bu şirkette 2. derece bağlantı ara, ilk mesajı Claude ile yaz.</p></div>`:""}
+    <div class="card">
+      <label class="quiet" style="font-size:.85rem">Kime yazdın?</label>
+      <input type="text" id="msgNote" placeholder="örn. X şirketinde KAM lead / hiring manager cold mail">
+      <select id="msgType" style="margin-top:8px">
+        <option value="warm">Warm (tanıdık, 2. derece, eski bağlantı)</option>
+        <option value="cold">Cold (hiring manager, recruiter)</option>
+      </select>
+      <button class="btn btn-primary" onclick="msgDone()">Mesaj gönderildi, kaydet</button>
+    </div>
+    <button class="btn btn-ghost" style="margin-top:12px" onclick="stepTo(4)">Taramaya geç</button>`;
+}
+function msgDone(){
+  const note=document.getElementById("msgNote").value.trim();
+  const type=document.getElementById("msgType").value;
+  if(!note){ alert("Bir isim veya şirket yaz, kayıtsız mesaj sayılmaz."); return; }
+  if(type==="warm") S.warmLog.unshift({date:trDate(), week:weekId(), note:note});
+  else S.warmLog.unshift({date:trDate(), week:weekId(), note:"[cold] "+note});
+  S.day.msgs++;
+  save();
+  if(S.day.msgs>=S.goals.msgs){ S.day.step=4; save(); }
+  render();
+}
+
+/* Adım 4: LinkedIn taraması */
+function renderLinkedin(){
+  const lane = LANE_OF_DAY[trDow()]||"B";
+  const url = LI_BASE+encodeURIComponent(LI_QUERIES[lane]||LI_QUERIES.B);
+  const url2 = LI_BASE+encodeURIComponent(LI_QUERIES.B);
+  app.innerHTML = `${backBtn()}<h1>Adım 4/5 · LinkedIn taraması</h1>
+    <p class="quiet">5 dakika, son 24 saat, günün şeridi: ${lane} (${LANES[lane].name}). Bulduğunu ekle, yarın kuyruktan çıkar.</p>
+    <a class="btn btn-primary" style="text-align:center;text-decoration:none" href="${url}" target="_blank" rel="noopener">Şerit ${lane} taramasını aç ↗</a>
+    ${lane!=="B"?`<a class="btn btn-ghost" style="display:block;text-align:center;text-decoration:none;margin-top:8px" href="${url2}" target="_blank" rel="noopener">Şerit B'ye de bak (birincil) ↗</a>`:""}
+    <div class="card">
+      <p class="quiet" style="font-size:.85rem">Bulduğun ilanı kuyruğa ekle:</p>
+      <input type="text" id="mTitle" placeholder="Pozisyon adı">
+      <input type="text" id="mCompany" placeholder="Şirket">
+      <input type="url" id="mUrl" placeholder="İlan linki">
+      <button class="btn btn-primary" onclick="manualAdd(false)">Kuyruğa ekle</button>
+    </div>
+    <button class="btn btn-primary" style="background:var(--bosphorus);color:#fff" onclick="stepTo(5)">Tarama bitti, günü kapat</button>`;
+}
+function manualAdd(stay){
+  const t=document.getElementById("mTitle").value.trim();
+  const c=document.getElementById("mCompany").value.trim();
+  const u=document.getElementById("mUrl").value.trim();
+  if(!t||!c){ alert("Pozisyon ve şirket zorunlu."); return; }
+  if(S.black.some(b=>c.toLowerCase().includes(b.toLowerCase()))){ alert("Bu şirket karalistede. Eklenmedi."); return; }
+  const text=t.toLowerCase(); let lane="B";
+  if(/business development|partnership/.test(text)) lane="A";
+  else if(/insight|client service|client development/.test(text)) lane="C";
+  else if(/launch|implementation|onboarding|project/.test(text)) lane="E";
+  S.queue.push({id:"m"+Date.now(),title:t,company:c,url:u,lane:lane,cv:LANES[lane].cv,fit:60,source:"manuel",flags:{red:[],toxic:[],green:[]},posted_at:new Date().toISOString()});
+  save();
+  ["mTitle","mCompany","mUrl"].forEach(x=>document.getElementById(x).value="");
+  render();
+}
+
+/* Adım 5: kapanış + kazı-kazan */
+function closeStreak(){
+  const today=trDate();
+  if(S.lastClosed===today) return;
+  const last=S.lastClosed?new Date(S.lastClosed):null;
+  let gap = last ? Math.round((new Date(today)-last)/864e5) : null;
+  const bridged = gap!==null && (gap===1 || (gap<=3 && trDow()===1));
+  if(gap===null){ S.streak=1; }
+  else if(bridged){ S.streak++; }
+  else if(gap===2 && S.freezeWeek!==weekId()){ S.streak++; S.freezeWeek=weekId(); }
+  else { S.streak=1; }
+  S.lastClosed=today;
+}
+function renderClosed(){
+  closeStreak(); save(); paintSky();
+  const met = goalsMet();
+  const already = S.rewardLog.some(r=>r.date===trDate());
+  app.innerHTML = `<h1>Gün kapandı.</h1>
+    <p class="quiet">Seri: <b class="mono">${S.streak}</b> · Bugün: ${S.day.apps} başvuru, ${S.day.msgs} mesaj · Kuyruk: ${S.queue.length} ilan</p>
+    ${met
+      ? (already
+        ? `<div class="card center"><p class="quiet">Bugünün kartı kazındı: <b>${esc((S.rewardLog.find(r=>r.date===trDate())||{}).prize||"")}</b></p></div>`
+        : `<div class="scratch" id="scratch" onclick="scratchOpen()" role="button" tabindex="0" aria-label="Kazı kazan kartını aç">
+             <div class="under"><div class="prize" id="prizeText"></div></div>
+             <div class="cover">HEDEF TUTTU · KAZIMAK İÇİN DOKUN</div>
+           </div>`)
+      : `<div class="card center"><p class="quiet">Hedef tutmadı (${S.day.apps}/${S.goals.apps} başvuru, ${S.day.msgs}/${S.goals.msgs} mesaj). Seri sayıldı ama kazı-kazan kilitli. Yarın açılır.</p>
+         <button class="btn btn-ghost" style="margin-top:10px" onclick="stepTo(2)">Geri dön, hedefi tamamla</button></div>`}
+    <p class="quiet center" style="margin-top:16px;font-size:.8rem">Yarın sabah her şey yine hazır. Şimdi kapat.</p>`;
+}
+function scratchOpen(){
+  const el=document.getElementById("scratch");
+  if(!el||el.classList.contains("open")) return;
+  const pool=S.rewards.length?S.rewards:DEFAULT_REWARDS;
+  const prize=pool[Math.floor(Math.random()*pool.length)];
+  document.getElementById("prizeText").textContent=prize;
+  el.classList.add("open");
+  S.rewardLog.unshift({date:trDate(),prize:prize}); save();
+}
+
+/* ---------- KUYRUK ---------- */
+function renderQueue(){
+  const items=S.queue.slice().sort((a,b)=>(b.fit||0)-(a.fit||0));
+  app.innerHTML = `<h1>Kuyruk</h1>
+    <p class="quiet">Başvurulmayı bekleyen ${items.length} ilan. En üstteki yarının adayı.</p>
+    <div class="card">${items.length?items.map(j=>`
+      <div class="list-item">
+        <div><div class="t">${esc(j.title)}</div><div class="s">${esc(j.company)} · Şerit ${j.lane} · %${j.fit||0} ${j.url?`· <a href="${esc(j.url)}" target="_blank" rel="noopener">aç↗</a>`:""}</div></div>
+        <div style="display:flex;gap:6px">
+          <button class="mini hot" onclick="quickApply('${j.id}')">başvurdum</button>
+          <button class="mini bad" onclick="dropQueue('${j.id}')">çıkar</button>
+        </div>
+      </div>`).join(""):'<p class="quiet">Kuyruk boş. Eleme ve LinkedIn taraması dolduracak.</p>'}</div>
+    ${S.warm.length?`<div class="section-title">Warm-önce bekleyenler</div>
+    <div class="card">${S.warm.map((j,i)=>`
+      <div class="list-item"><div><div class="t">${esc(j.title)}</div><div class="s">${esc(j.company)}</div></div>
+      <button class="mini" onclick="warmToQueue(${i})">kuyruğa al</button></div>`).join("")}</div>`:""}`;
+}
+function quickApply(id){
+  if(!confirm("Bu ilana başvurdun mu? Takip listesine eklenecek ve günün sayacına işlenecek.")) return;
+  const i=S.queue.findIndex(x=>x.id===id);
+  if(i>-1){
+    const j=S.queue.splice(i,1)[0];
+    S.tracker.unshift({id:j.id,title:j.title,company:j.company,cv:j.cv,stage:"Başvuruldu",date:trDate(),url:j.url});
+    S.day.apps++;
+  }
+  save(); render();
+}
+function dropQueue(id){ S.queue=S.queue.filter(x=>x.id!==id); save(); render(); }
+function warmToQueue(i){ S.queue.push(S.warm.splice(i,1)[0]); save(); render(); }
+
+/* ---------- TAKİP ---------- */
+const STAGES=["Başvuruldu","Yanıt geldi","Mülakat","Teklif","Red","Sessiz"];
+function renderTracker(){
+  app.innerHTML = `<h1>Takip</h1>
+    <p class="quiet">${S.tracker.length} başvuru. Aşama değişince seç, otomatik kaydedilir.</p>
+    <button class="mini" style="margin-top:8px" onclick="exportCSV()">CSV indir (Notion'a aktarılır)</button>
+    <div class="card">${S.tracker.length?S.tracker.map((t,i)=>`
+      <div class="list-item">
+        <div><div class="t">${esc(t.title)}</div>
+        <div class="s">${esc(t.company)} · ${t.cv||""} · ${trDayName(t.date)} ${t.date} ${t.url?`· <a href="${esc(t.url)}" target="_blank" rel="noopener">ilan↗</a>`:""}</div></div>
+        <select onchange="setStage(${i},this.value)" style="width:auto;margin:0;font-size:.78rem">
+          ${STAGES.map(s=>`<option ${s===t.stage?"selected":""}>${s}</option>`).join("")}
+        </select>
+      </div>`).join(""):'<p class="quiet">Henüz başvuru yok.</p>'}</div>
+    <div class="section-title">Mesaj günlüğü</div>
+    <div class="card">${S.warmLog.length?S.warmLog.slice(0,20).map(w=>`
+      <div class="list-item"><div><div class="t" style="font-weight:400;font-size:.86rem">${esc(w.note)}</div><div class="s">${trDayName(w.date)} ${w.date}</div></div></div>`).join(""):'<p class="quiet">Kayıt yok.</p>'}</div>`;
+}
+function setStage(i,v){ S.tracker[i].stage=v; save(); }
+function exportCSV(){
+  const rows=[["Gün","Tarih","Pozisyon","Şirket","CV","Durum","Link"]];
+  S.tracker.forEach(t=>rows.push([trDayName(t.date),t.date,t.title,t.company,t.cv||"",t.stage,t.url||""]));
+  const csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(",")).join("\n");
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"}));
+  a.download="basvuru_takip_"+trDate()+".csv"; a.click();
+}
+
+/* ---------- NOTLAR ---------- */
+function renderNotes(){
+  app.innerHTML = `<h1>Notlar</h1>
+    <p class="quiet">Aklına gelen önemli şeyi buraya at, kafanda taşıma.</p>
+    <div class="card">
+      <input type="text" id="todoInput" placeholder="örn. Salı X şirketinin kariyer sayfasına bak" onkeydown="if(event.key==='Enter')addTodo()">
+      <button class="btn btn-primary" onclick="addTodo()">Ekle</button>
+    </div>
+    <div class="card">${S.todos.length?S.todos.map((t,i)=>`
+      <div class="todo-item">
+        <input type="checkbox" ${t.done?"checked":""} onchange="toggleTodo(${i})">
+        <div class="txt ${t.done?"done":""}">${esc(t.text)}</div>
+        <button class="mini bad" onclick="delTodo(${i})">sil</button>
+      </div>`).join(""):'<p class="quiet">Not yok. Temiz kafa.</p>'}</div>`;
+}
+function addTodo(){
+  const v=document.getElementById("todoInput").value.trim();
+  if(!v) return;
+  S.todos.unshift({text:v,done:false}); save(); render();
+}
+function toggleTodo(i){ S.todos[i].done=!S.todos[i].done; save(); render(); }
+function delTodo(i){ S.todos.splice(i,1); save(); render(); }
+
+/* ---------- CV'LER ---------- */
+function renderCV(){
+  app.innerHTML = `<h1>CV cephaneliği</h1>
+    <p class="quiet">5 şerit, 5 CV. Sistem her ilana şerit ve CV atar. Uyum yüzdeleri gerçek coverage analizlerinden.</p>
+    ${Object.entries(LANES).map(([k,l])=>`
+      <div class="card" style="border-left:4px solid ${l.color}">
+        <div class="job-title">Şerit ${k} · ${l.name}</div>
+        <div class="job-meta">${l.cv} · ${l.note}</div>
+        ${(CV_FIT[l.cv]||[]).map(([role,fit])=>`
+          <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--card-line);font-size:.86rem">
+            <span>${role}</span><span class="mono" style="color:var(--amber)">${fit}</span>
+          </div>`).join("")}
+      </div>`).join("")}`;
+}
+
+/* ---------- KARALİSTE ---------- */
+function suggestBlack(name){
+  if(!S.pendingBlack.includes(name) && !S.black.includes(name)){ S.pendingBlack.push(name); save(); }
+  alert(name+" onay kuyruğuna eklendi. Karaliste sekmesinden onayla.");
+}
+function renderBlack(){
+  app.innerHTML = `<h1>Karaliste</h1>
+    <p class="quiet">Buradaki şirketler elemeden hiç geçmez. Ekleme sadece senin onayınla.</p>
+    ${S.pendingBlack.length?`<div class="section-title">Onay bekleyen</div>
+    <div class="card">${S.pendingBlack.map((n,i)=>`
+      <div class="list-item"><div class="t">${esc(n)}</div>
+      <div style="display:flex;gap:6px">
+        <button class="mini hot" onclick="approveBlack(${i})">onayla</button>
+        <button class="mini" onclick="rejectBlack(${i})">reddet</button>
+      </div></div>`).join("")}</div>`:""}
+    <div class="section-title">Onaylı liste</div>
+    <div class="card">${S.black.map((n,i)=>`
+      <div class="list-item"><div class="t">${esc(n)}</div>
+      <button class="mini" onclick="removeBlack(${i})">çıkar</button></div>`).join("")}
+      <input type="text" id="blackAdd" placeholder="Şirket ekle">
+      <button class="btn btn-primary" onclick="addBlack()">Karalisteye ekle</button>
+      <p class="quiet" style="font-size:.74rem;margin-top:8px">Site anında uygular. Veri motorunun da görmesi için fetch_jobs.py içindeki blacklist satırına ekle.</p>
+    </div>`;
+}
+function approveBlack(i){ S.black.push(S.pendingBlack.splice(i,1)[0]); save(); render(); }
+function rejectBlack(i){ S.pendingBlack.splice(i,1); save(); render(); }
+function removeBlack(i){ S.black.splice(i,1); save(); render(); }
+function addBlack(){ const v=document.getElementById("blackAdd").value.trim(); if(v){ S.black.push(v); save(); render(); } }
+
+/* ---------- AYARLAR ---------- */
+function renderSettings(){
+  const src = DATA.sources||{};
+  const srcRows = Object.keys(src).length
+    ? Object.entries(src).map(([k,v])=>`<div class="list-item"><div class="t" style="font-weight:400;font-size:.86rem">${esc(k)}</div><div class="s mono">${v} ilan</div></div>`).join("")
+    : '<p class="quiet">Kaynak bilgisi yok (motor v1.1 ilk çalışmasından sonra dolar).</p>';
+  app.innerHTML = `<h1>Ayarlar</h1>
+    <div class="card">
+      <div class="job-title" style="font-size:.95rem">Günlük hedefler</div>
+      <p class="quiet" style="font-size:.8rem">Kazı-kazan bu hedefler tutunca açılır. Gerçekçi tut: sürdürülebilir 2+1, hırslı gün 5+3.</p>
+      <label class="quiet" style="font-size:.82rem;display:block;margin-top:10px">Başvuru / gün</label>
+      <input type="number" id="gApps" min="1" max="10" value="${S.goals.apps}">
+      <label class="quiet" style="font-size:.82rem;display:block;margin-top:10px">Mesaj / gün (warm veya cold)</label>
+      <input type="number" id="gMsgs" min="0" max="10" value="${S.goals.msgs}">
+      <button class="btn btn-primary" onclick="saveGoals()">Hedefleri kaydet</button>
+    </div>
+    <div class="card">
+      <div class="job-title" style="font-size:.95rem">Veri kaynakları (son çekim)</div>
+      ${srcRows}
+    </div>
+    <div class="card">
+      <div class="job-title" style="font-size:.95rem">Kazı-kazan havuzu</div>
+      <p class="quiet" style="font-size:.8rem">Her satır bir kart. Boş kartlar merakı canlı tutar.</p>
+      <textarea id="rewardsBox">${esc(S.rewards.join("\n"))}</textarea>
+      <button class="btn btn-primary" onclick="saveRewards()">Havuzu kaydet</button>
+    </div>
+    <div class="card">
+      <div class="job-title" style="font-size:.95rem">Veri</div>
+      <button class="mini" style="margin-top:10px" onclick="exportState()">Durumu dışa aktar (yedek)</button>
+      <button class="mini bad" style="margin-top:10px" onclick="resetDay()">Bugünü sıfırla</button>
+    </div>`;
+}
+function saveGoals(){
+  S.goals.apps=Math.max(1,parseInt(document.getElementById("gApps").value)||2);
+  S.goals.msgs=Math.max(0,parseInt(document.getElementById("gMsgs").value)||1);
+  save(); alert("Hedefler güncellendi: "+S.goals.apps+" başvuru + "+S.goals.msgs+" mesaj."); render();
+}
+function saveRewards(){
+  S.rewards=document.getElementById("rewardsBox").value.split("\n").map(s=>s.trim()).filter(Boolean);
+  save(); alert("Havuz güncellendi.");
+}
+function exportState(){
+  const blob=new Blob([JSON.stringify(S,null,1)],{type:"application/json"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+  a.download="gorev_yedek_"+trDate()+".json"; a.click();
+}
+function resetDay(){ if(confirm("Bugünün adımları ve sayaçları sıfırlansın mı? Seri etkilenmez.")){ S.day={date:trDate(),step:0,apps:0,msgs:0}; save(); render(); } }
+
+/* ---------- başlat ---------- */
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>{TAB=b.dataset.tab;render();}));
+loadJobs().then(render);
+</script>
+</body>
+</html>
