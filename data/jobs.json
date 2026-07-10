@@ -1,9 +1,12 @@
 {
  "version": "1.1",
- "fetched_at": "2026-07-10T17:29:13.926717+00:00",
+ "fetched_at": "2026-07-10T17:39:20.386081+00:00",
  "job_count": 6,
  "errors": [
-  "jsearch: JSEARCH_KEY tanimli degil, atlandi (kurulum: KURULUM.md)",
+  "jsearch [Key Account Manager]: HTTPError",
+  "jsearch [Insights Manager]: HTTPError",
+  "jsearch [Business Development Manager]: HTTPError",
+  "jsearch [Commercial Project Manager]: HTTPError",
   "hiring.cafe [Key Account Manager]: HTTPError: HTTP Error 405: Method Not Allowed",
   "hiring.cafe [Enterprise Account Manager]: HTTPError: HTTP Error 405: Method Not Allowed",
   "hiring.cafe [Customer Success Manager]: HTTPError: HTTP Error 405: Method Not Allowed",
