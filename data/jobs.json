@@ -1,9 +1,9 @@
 {
  "version": "1.4",
- "fetched_at": "2026-07-17T05:46:47.799559+00:00",
+ "fetched_at": "2026-07-20T06:22:53.350712+00:00",
  "job_count": 0,
  "errors": [
-  "jsearch [Key Account Manager]: HTTP 405 {\"message\":\"The API provider has disabled request access to the API. Please contact API Provider.\"}",
+  "jsearch [Key Account Manager]: HTTP 403 {\"message\":\"You are not subscribed to this API.\"}",
   "jsearch [Insights Manager]: HTTP 429 {\"message\":\"Too many requests\"}",
   "jsearch [Business Development Manager]: HTTP 429 {\"message\":\"Too many requests\"}",
   "jsearch [Commercial Project Manager]: HTTP 429 {\"message\":\"Too many requests\"}",
