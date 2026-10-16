@@ -1,7 +1,7 @@
 {
  "version": "1.4",
- "fetched_at": "2026-10-15T08:09:05.421573+00:00",
- "job_count": 0,
+ "fetched_at": "2026-10-16T08:02:02.289332+00:00",
+ "job_count": 1,
  "errors": [
   "jsearch [Key Account Manager]: HTTP 403 {\"message\":\"You are not subscribed to this API.\"}",
   "jsearch [Insights Manager]: HTTP 429 {\"message\":\"Too many requests\"}",
@@ -11,12 +11,36 @@
  ],
  "sources": {
   "jsearch": 0,
-  "themuse": 0,
+  "themuse": 1,
   "hiring_cafe": 0,
   "remotive": 0,
   "arbeitnow": 0,
   "greenhouse": 0,
   "lever": 0
  },
- "jobs": []
+ "jobs": [
+  {
+   "id": "ubersraccountexecutiveu4bmidmarketsalesplan",
+   "title": "Sr Account Executive, U4B Mid Market (Sales Plan)",
+   "company": "Uber",
+   "location": "Istanbul, Turkey",
+   "url": "https://www.themuse.com/jobs/uber/sr-account-executive-u4b-mid-market-sales-plan-9c3847",
+   "posted_at": "2026-10-15T20:55:56Z",
+   "source": "themuse",
+   "lane": "B",
+   "cv": "CV2_KAM",
+   "fit": 59,
+   "prio": 3,
+   "flags": {
+    "red": [
+     "account executive",
+     "quota"
+    ],
+    "toxic": [
+     "fast-paced"
+    ],
+    "green": []
+   }
+  }
+ ]
 }
