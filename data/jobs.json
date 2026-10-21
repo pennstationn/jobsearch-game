@@ -1,6 +1,6 @@
 {
  "version": "1.4",
- "fetched_at": "2026-10-20T08:22:14.747451+00:00",
+ "fetched_at": "2026-10-21T08:25:46.528980+00:00",
  "job_count": 1,
  "errors": [
   "jsearch [Key Account Manager]: HTTP 403 {\"message\":\"You are not subscribed to this API.\"}",
@@ -25,7 +25,7 @@
    "company": "Uber",
    "location": "Istanbul, Turkey",
    "url": "https://www.themuse.com/jobs/uber/sr-account-executive-u4b-mid-market-sales-plan-9c3847",
-   "posted_at": "2026-10-15T20:55:56Z",
+   "posted_at": "2026-10-21T02:58:07Z",
    "source": "themuse",
    "lane": "B",
    "cv": "CV2_KAM",
