@@ -1,6 +1,6 @@
 {
  "version": "1.4",
- "fetched_at": "2026-10-29T09:43:37.959085+00:00",
+ "fetched_at": "2026-10-30T09:49:32.687801+00:00",
  "job_count": 0,
  "errors": [
   "jsearch [Key Account Manager]: HTTP 403 {\"message\":\"You are not subscribed to this API.\"}",
