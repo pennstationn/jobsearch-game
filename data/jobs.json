@@ -1,12 +1,14 @@
 {
  "version": "1.4",
- "fetched_at": "2026-11-06T10:39:47.378181+00:00",
+ "fetched_at": "2026-11-09T11:13:31.435251+00:00",
  "job_count": 0,
  "errors": [
   "jsearch [Key Account Manager]: HTTP 403 {\"message\":\"You are not subscribed to this API.\"}",
   "jsearch [Insights Manager]: HTTP 429 {\"message\":\"Too many requests\"}",
   "jsearch [Business Development Manager]: HTTP 429 {\"message\":\"Too many requests\"}",
   "jsearch [Commercial Project Manager]: HTTP 429 {\"message\":\"Too many requests\"}",
+  "themuse [Istanbul, Turkey p0]: HTTP 404 <!DOCTYPE html><html id=\"__next_error__\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPrio",
+  "themuse [Turkey p0]: HTTP 404 <!DOCTYPE html><html id=\"__next_error__\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPrio",
   "hiring.cafe: devre disi (eski API 2026-05'te kirildi, HTTP 405)"
  ],
  "sources": {
